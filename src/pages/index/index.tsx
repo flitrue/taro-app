@@ -1,9 +1,13 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
+import { wd_get_num } from "../../configs/Api"
 import './index.scss'
 
-export default class Index extends Component {
+type IndexState = {
+  num: number
+}
+export default class Index extends Component<{}, IndexState> {
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -16,9 +20,37 @@ export default class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
+  constructor(props) {
+   super(props)
+   this.state = {
+     num: 0
+   }
+  }
+
+  getNum() {
+    Taro.request({
+      url: wd_get_num(),
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    }).then ((res) => {
+      this.setState({
+        num: res.data.data.num
+      })
+    })
+  }
+
+  goLogin() {
+    Taro.navigateTo({
+      url: '/pages/login/index'
+    })
+  }
+
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    this.getNum()
+  }
 
   componentWillUnmount () { }
 
@@ -27,9 +59,13 @@ export default class Index extends Component {
   componentDidHide () { }
 
   render () {
+    const { num } = this.state
     return (
       <View className='index'>
-        <AtButton type='primary'>按钮</AtButton>
+        <View className='num'>{num}</View>
+        <View className='btn'>
+          <AtButton type='primary' onClick={this.goLogin}>登录</AtButton>
+        </View>
       </View>
     )
   }
