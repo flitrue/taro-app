@@ -29,6 +29,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@antv/f2": "^3.5.0",
     "@tarojs/components": "2.0.0",
     "@tarojs/components-qa": "2.0.0",
     "@tarojs/router": "2.0.0",

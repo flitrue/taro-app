@@ -11,7 +11,7 @@ type LoginState = {
 }
 export default class Login extends Component<{}, LoginState> {
   config: Config = {
-
+    navigationBarTitleText: '登录'
   }
   
   constructor() {
@@ -50,9 +50,7 @@ export default class Login extends Component<{}, LoginState> {
         })
         setTimeout(() => {
           Taro.hideToast()
-          Taro.navigateTo({
-            url: '/pages/index/index'
-          })
+          Taro.navigateBack()
         }, 2000)
       }
     })
